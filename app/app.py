@@ -1,4 +1,4 @@
-print("Starting Scrapy Cloud Client Script")
+
 import sys
 from scrapinghub import ScrapinghubClient
 import datetime as dt
@@ -8,9 +8,9 @@ import pandas as pd
 class ScrapyCloudClient:
 
     def __init__(self):
-        self.apikey = 'a59a261c953e483bafc0119ced6206db' # your API key as a string
+        self.apikey = '' # your API key as a string
         self.client = ScrapinghubClient(self.apikey)
-        self.project_num = 380207
+        self.project_num = 0
         self.project = self.client.get_project(self.project_num)
         self.neighborhood_spider = self.get_neighborhood_spider()
         self.listing_spider = self.get_listing_spider()
@@ -85,32 +85,21 @@ class ScrapyCloudNeighborhoodSearchSpider(ScrapyCloudSpider):
                 list_ids.extend(df['listing___id'].tolist())
         return list(set(list_ids))
 
-#    def get_listing_ids(self):
-#        return list(set([i['listing___id'] for i in self.get_items_from_spider()]))
-print("\n")
-print("Loading Client")
-client = ScrapyCloudClient()
-print("\n")
-print("Saving new files to local hard drive")
-print("-airdna files")
-#client.airdna_spider.save_to_file()
-print("-neighborhood search files")
-client.neighborhood_spider.save_to_file()
-print("-listing files")
-client.listing_spider.save_to_file()
-print("\n")
-print("Running Spiders")
-#print("-airdna spider")
-#if len(sys.argv) > 1:
-#    if sys.argv[1]:
-#        airdna_access_token = sys.argv[1]
-#        print("You input this Airdna Token: {}".format(airdna_access_token))
-#        client.airdna_spider.run({'access_token': airdna_access_token})
-#else:
-#    print("PUT IN AIRDNA TOKEN!!")
-print("-neighborhood search spider")
-client.neighborhood_spider.run()
-print("-listing spider")
-client.listing_spider.run({'listing_ids': client.listing_ids()})
-print("\n")
-print ("ALL DONE!")
+def execute_crawl():
+    print("Starting Scrapy Cloud Client Script")
+    print("Loading Client")
+    client = ScrapyCloudClient()
+    print("Saving new files to local hard drive")
+    print("-airdna files")
+    print("-neighborhood search files")
+    client.neighborhood_spider.save_to_file()
+    print("-listing files")
+    client.listing_spider.save_to_file()
+    print("\n")
+    print("Running Spiders")
+    print("-neighborhood search spider")
+    client.neighborhood_spider.run()
+    print("-listing spider")
+    client.listing_spider.run({'listing_ids': client.listing_ids()})
+    print("\n")
+    print ("ALL DONE!")
