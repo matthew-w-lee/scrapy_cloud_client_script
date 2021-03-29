@@ -1,5 +1,4 @@
 # Scrapy Cloud Client Script
-[view demo](https://www.google.com)
 ## About
 Simple Python Flask application used to send web scraping commencement requests to Scrapy's cloud service.
 
